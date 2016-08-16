@@ -7,3 +7,10 @@
 	-  create some report tables about the GTFS data
 -  export the `stop` and the `route` tables in `GeoJSON` format;
 -  ... more to come.
+
+## Requirements
+
+- gdal/ogr >= 2.1;
+- spatialite;
+- unzip;
+- curl.
