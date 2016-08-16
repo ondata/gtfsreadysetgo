@@ -1,69 +1,72 @@
 #!/bin/bash
 
-### requisiti
+### requirements
 # gdal >= 2.1
 # spatialite
 # unzip
 # curl
-### requisiti
+### requirements
 
+# A variable for the currenct directory of this script. All the output files will be created inside it
+workingFolder=${PWD}
 
-cartellaLavoro=${PWD}
-nomeFile="feed_gtfs"
+# To set the name of the principal output folder. It will be created inside the workingFolder
+output="output_example_folder"
 
-mkdir "$cartellaLavoro/output" > /dev/null 2>&1
-mkdir "$cartellaLavoro/temp" > /dev/null 2>&1
+# The output name of the downloaded GTFS file
+fileName="feed_gtfs"
 
-URLGTFS="https://transitfeeds-data.s3-us-west-1.amazonaws.com/public/feeds/ferrotramviaria/412/20160718/gtfs.zip"
+# create two output folders
+mkdir "$workingFolder/$output" > /dev/null 2>&1
+mkdir "$workingFolder/temp" > /dev/null 2>&1    
 
-# scarico il file GTFS
-curl -sL "$URLGTFS" > "$cartellaLavoro/$nomeFile.zip"
+# the URL of the source GTFS. It must be a zip file
+URLGTFS="https://www.comune.palermo.it/gtfs/amat_feed_gtfs.zip"
 
-# decomprimo il file GTFS
-rm "$cartellaLavoro/$nomeFile"/*.csv
-unzip -qq -o "$cartellaLavoro/$nomeFile" -d "$cartellaLavoro/$nomeFile"
+# download the GTFS file
+curl -sL "$URLGTFS" > "$workingFolder/$fileName.zip"
 
-# creo la copia dei file in formato CSV
-cd "./$nomeFile"
+# unzip the GTFS file
+rm "$workingFolder/$fileName"/*.csv > /dev/null 2>&1
+unzip -qq -o "$workingFolder/$fileName" -d "$workingFolder/$fileName"
+
+# create a CSV copy of the source txt GTFS files
+cd "./$fileName"
 for file in *.txt
 do
-	cp "$file" "../output/${file%.txt}.csv"
+    cp "$file" "../$output/${file%.txt}.csv"
 done
 cd ..
 
-mv "$cartellaLavoro"/output/routes.csv "$cartellaLavoro"/"$nomeFile"/routes.csv 
 
-# creo il geojson delle rotte
-rm "$cartellaLavoro/output/shapes.geojson"
-ogr2ogr -f geojson -dialect SQLite -sql "SELECT shape_id, MakeLine(MakePoint(CAST(shape_pt_lon AS float),CAST(shape_pt_lat AS float))) FROM shapes GROUP BY shape_id" -oo AUTODETECT_TYPE=YES -a_srs "+proj=longlat +datum=WGS84 +no_defs" "$cartellaLavoro/output/shapes.geojson" "$cartellaLavoro/output/shapes.csv"
+mv "$workingFolder/$output/routes.csv" "$workingFolder"/"$fileName"/routes.csv 
 
-# creo il geojson delle fermate
-rm "$cartellaLavoro/output/stops.geojson"
-ogr2ogr -f geojson -oo AUTODETECT_TYPE=YES -oo X_POSSIBLE_NAMES=stop_lon -oo Y_POSSIBLE_NAMES=stop_lat -a_srs "+proj=longlat +datum=WGS84 +no_defs" "$cartellaLavoro/output/stops.geojson" "$cartellaLavoro/output/stops.csv"
+# create the stop GeoJSON file
+rm "$workingFolder/$output/stops.geojson" > /dev/null 2>&1
+ogr2ogr -f geojson -oo AUTODETECT_TYPE=YES -oo X_POSSIBLE_NAMES=stop_lon -oo Y_POSSIBLE_NAMES=stop_lat -a_srs "+proj=longlat +datum=WGS84 +no_defs" "$workingFolder/$output/stops.geojson" "$workingFolder/$output/stops.csv"
 
-# creo un file spatialite e importo le fermate - stops.csv - spazializzandole
-ogr2ogr -f SQLite -dsco SPATIALITE=YES -nln "stops" -oo AUTODETECT_TYPE=YES -oo X_POSSIBLE_NAMES=stop_lon -oo Y_POSSIBLE_NAMES=stop_lat -a_srs "+proj=longlat +datum=WGS84 +no_defs" "$cartellaLavoro/output/$nomeFile.sqlite" "$cartellaLavoro/output/stops.csv"
-rm "$cartellaLavoro"/output/stops.csv
+# create a spatialite file and import the stops table inside it. The imported stops table will be a spatial table
+ogr2ogr -f SQLite -dsco SPATIALITE=YES -nln "stops" -oo AUTODETECT_TYPE=YES -oo X_POSSIBLE_NAMES=stop_lon -oo Y_POSSIBLE_NAMES=stop_lat -a_srs "+proj=longlat +datum=WGS84 +no_defs" "$workingFolder/$output/$fileName.sqlite" "$workingFolder/$output/stops.csv"
+rm "$workingFolder/$output/stops.csv"
 
-# importo tutte le tabelle csv della cartella output nel file spatialite creato 
-for file in "$cartellaLavoro"/output/*.csv
+# import all the GTFS tables in the just created spatialite file
+for file in "$workingFolder/$output/"*.csv
 do
-	filename=$(basename "$file")
-	extension="${filename##*.}"
-	filename="${filename%.*}"
-	ogr2ogr -update -f SQLite -nln "$filename" -oo AUTODETECT_TYPE=YES "$cartellaLavoro/output/$nomeFile.sqlite" "$cartellaLavoro/output/$filename.$extension"
+    filename=$(basename "$file")
+    extension="${filename##*.}"
+    filename="${filename%.*}"
+    ogr2ogr -update -f SQLite -nln "$filename" -oo AUTODETECT_TYPE=YES "$workingFolder/$output/$fileName.sqlite" "$workingFolder/$output/$filename.$extension"
 done
 
-ogr2ogr -update -f SQLite -nln "routes_tmp" -oo AUTODETECT_TYPE=YES "$cartellaLavoro/output/$nomeFile.sqlite" "$cartellaLavoro/$nomeFile/routes.csv"
+ogr2ogr -update -f SQLite -nln "routes_tmp" -oo AUTODETECT_TYPE=YES "$workingFolder/$output/$fileName.sqlite" "$workingFolder/$fileName/routes.csv"
 
-# cancello i file CSV temporanei creati
-rm "$cartellaLavoro"/output/*.csv
-rm "$cartellaLavoro/$nomeFile/routes.csv"
+# delete all the created CSV files
+rm "$workingFolder/$output/"*.csv
+rm "$workingFolder/$fileName/routes.csv"
 
-# creo una variabile con il puntamento a una query SQL
+# create a file .sql useful to create the spatial routes table
 Qrotte=${PWD}/temp/qrotte.sql
 
-# Creo un file e lo riempo con la query che spazializza la tabella rotte
 cat <<EOF > "$Qrotte"
 CREATE TABLE routes AS
 SELECT rt.*, CastToMultiLinestring("geometry") geometry
@@ -96,14 +99,17 @@ SELECT RecoverGeometryColumn('routes', 'Geometry',4326, 'MULTILINESTRING', 2);
 DROP TABLE routes_tmp;
 EOF
 
-# eseguo la query
-spatialite "${PWD}""/output/$nomeFile.sqlite" < "$Qrotte"
+# execute query using the created qrotte.sql file
+spatialite "${PWD}""/$output/$fileName.sqlite" < "$Qrotte"
 
-# creo la tabella route_type
+# export routes GeoJSON file
+rm "${PWD}""/$output/routes.geojson" > /dev/null 2>&1
+ogr2ogr -f geojson "${PWD}""/$output/routes.geojson" "${PWD}""/$output/$fileName.sqlite" routes
+
+# create route_type table and import it in the spatialite file
 
 rType=${PWD}/temp/rType.csv
 
-# Contenuto di route_type
 cat <<EOF > "$rType"
 route_type,route_type_name,route_type_desc
 0,"Tram, Streetcar, Light rail",Any light rail or street level system within a metropolitan area
@@ -117,14 +123,15 @@ route_type,route_type_name,route_type_desc
 
 EOF
 
-ogr2ogr -update -f SQLite -nln "route_type" -oo AUTODETECT_TYPE=YES "$cartellaLavoro/output/$nomeFile.sqlite" "$cartellaLavoro/temp/rType.csv"
+ogr2ogr -update -f SQLite -nln "route_type" -oo AUTODETECT_TYPE=YES "$workingFolder/$output/$fileName.sqlite" "$workingFolder/temp/rType.csv"
 
-rSQL=${PWD}/temp/rSQL.csv
+# create a sql file useful to create some GTFS report tables
 
-# query per creazione del report
+rSQL=${PWD}/temp/rSQL.sql
+
 cat <<EOF > "$rSQL"
 /* Number_of_modes_and_types */
-CREATE table z_RoutesNumber_by_types AS	
+CREATE table z_RoutesNumber_by_types AS 
 SELECT "t"."route_type_name" AS "route_type_name", "t"."route_type_desc" AS "route_type_desc", count(*) AS numeroLinee
 FROM routes AS "r" 
 JOIN route_type AS "t" 
@@ -192,8 +199,12 @@ FROM "z_StopsNumber_by_Route"
 LEFT JOIN routes r using(route_id);
 EOF
 
-spatialite "${PWD}""/output/$nomeFile.sqlite" < "$rSQL"
+# execute the rSQL.sql query
+spatialite "${PWD}""/$output/$fileName.sqlite" < "$rSQL"
 
-# cancello la cartella temporanea
-rm -rf "$cartellaLavoro/temp"
+# remove the temp folder and the downloaded GFTS zip file
+rm -rf "$workingFolder/temp"
+rm "$workingFolder/$fileName.zip"
 
+<<COMMENT1
+COMMENT1

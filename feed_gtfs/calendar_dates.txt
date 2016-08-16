@@ -1,0 +1,5 @@
+service_id,date,exception_type
+FE_merged_80004,20160715,1
+FR_merged_80005,20160815,2
+FE_merged_80006,20160815,1
+FR_merged_80003,20160715,2

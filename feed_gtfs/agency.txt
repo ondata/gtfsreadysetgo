@@ -1,0 +1,2 @@
+agency_phone,agency_fare_url,agency_url,agency_id,agency_name,agency_timezone,agency_lang
++39091350111,http://www.amat.pa.it/index.php?option=com_jumi&fileid=9&Itemid=144,http://www.amat.pa.it,AMAT,AMAT Palermo S.p.A.,Europe/Rome,it
