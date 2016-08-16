@@ -30,6 +30,10 @@ curl -sL "$URLGTFS" > "$workingFolder/$fileName.zip"
 rm "$workingFolder/$fileName"/*.csv > /dev/null 2>&1
 unzip -qq -o "$workingFolder/$fileName" -d "$workingFolder/$fileName"
 
+# The script works only with GTFS that contains the shapes.txt file. Then there is a test to verify that it exists
+if test -f "$workingFolder/$fileName"/shapes.txt 
+then
+
 # create a CSV copy of the source txt GTFS files
 cd "./$fileName"
 for file in *.txt
@@ -205,6 +209,10 @@ spatialite "${PWD}""/$output/$fileName.sqlite" < "$rSQL"
 # remove the temp folder and the downloaded GFTS zip file
 rm -rf "$workingFolder/temp"
 rm "$workingFolder/$fileName.zip"
+
+else   
+   echo "The script works only with a GTFS file that has inside the shapes.txt file"
+fi
 
 <<COMMENT1
 COMMENT1
