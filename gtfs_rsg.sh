@@ -110,6 +110,10 @@ spatialite "${PWD}""/$output/$fileName.sqlite" < "$Qrotte"
 rm "${PWD}""/$output/routes.geojson" > /dev/null 2>&1
 ogr2ogr -f geojson "${PWD}""/$output/routes.geojson" "${PWD}""/$output/$fileName.sqlite" routes
 
+# export routes and stops in KML file format
+ogr2ogr -f KML -dsco NameField=route_short_name -dsco DescriptionField=route_long_name "${PWD}""/$output/routes.kml" "${PWD}""/$output/$fileName.sqlite" routes
+ogr2ogr -f KML -dsco NameField=stop_code -dsco DescriptionField=stop_name "${PWD}""/$output/stops.kml" "${PWD}""/$output/$fileName.sqlite" stops
+
 # create route_type table and import it in the spatialite file
 
 rType=${PWD}/temp/rType.csv
