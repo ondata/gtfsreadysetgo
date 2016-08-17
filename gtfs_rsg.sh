@@ -7,6 +7,7 @@
 # curl
 ### requirements
 
+
 # A variable for the currenct directory of this script. All the output files will be created inside it
 workingFolder=${PWD}
 
@@ -104,7 +105,7 @@ DROP TABLE routes_tmp;
 EOF
 
 # execute query using the created qrotte.sql file
-spatialite "${PWD}""/$output/$fileName.sqlite" < "$Qrotte"
+spatialite "${PWD}""/$output/$fileName.sqlite" < "$Qrotte"  > /dev/null 2>&1
 
 # export routes GeoJSON file
 rm "${PWD}""/$output/routes.geojson" > /dev/null 2>&1
@@ -140,7 +141,7 @@ rSQL=${PWD}/temp/rSQL.sql
 cat <<EOF > "$rSQL"
 /* Number_of_modes_and_types */
 CREATE table z_RoutesNumber_by_types AS 
-SELECT "t"."route_type_name" AS "route_type_name", "t"."route_type_desc" AS "route_type_desc", count(*) AS numeroLinee
+SELECT "t"."route_type_name" AS "route_type_name", "t"."route_type_desc" AS "route_type_desc", count(*) AS routesNumber
 FROM routes AS "r" 
 JOIN route_type AS "t" 
 ON r.route_type = t.route_type
@@ -148,7 +149,7 @@ GROUP BY t.route_type_desc;
 /* Transit system in km */
 CREATE table z_Transit_system_in_km AS 
 SELECT "t"."route_type_name" AS "route_type_name", "t"."route_type_desc" AS "route_type_desc", 
-count(*) AS numeroLinee, 
+count(*) AS routesNumber, 
 SUM(GeodesicLength(r.geometry))/1000 AS lunghezzaKm
 FROM routes AS "r" 
 JOIN route_type AS "t" 
@@ -208,7 +209,7 @@ LEFT JOIN routes r using(route_id);
 EOF
 
 # execute the rSQL.sql query
-spatialite "${PWD}""/$output/$fileName.sqlite" < "$rSQL"
+spatialite "${PWD}""/$output/$fileName.sqlite" < "$rSQL"  > /dev/null 2>&1
 
 # remove the temp folder and the downloaded GFTS zip file
 rm -rf "$workingFolder/temp"
@@ -217,6 +218,8 @@ rm "$workingFolder/$fileName.zip"
 else   
    echo "The script works only with a GTFS file that has inside the shapes.txt file"
 fi
+
+
 
 <<COMMENT1
 COMMENT1
