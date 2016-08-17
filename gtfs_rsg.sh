@@ -18,6 +18,7 @@ output="output_example_folder"
 fileName="feed_gtfs"
 
 # create two output folders
+rm -rf "$workingFolder/$output" > /dev/null 2>&1
 mkdir "$workingFolder/$output" > /dev/null 2>&1
 mkdir "$workingFolder/temp" > /dev/null 2>&1    
 
@@ -29,6 +30,7 @@ curl -sL "$URLGTFS" > "$workingFolder/$fileName.zip"
 
 # unzip the GTFS file
 rm "$workingFolder/$fileName"/*.csv > /dev/null 2>&1
+rm "$workingFolder/$fileName"/*.txt > /dev/null 2>&1
 unzip -qq -o "$workingFolder/$fileName" -d "$workingFolder/$fileName"
 
 # The script works only with GTFS that contains the shapes.txt file. Then there is a test to verify that it exists
