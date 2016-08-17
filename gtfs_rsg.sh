@@ -26,6 +26,7 @@ mkdir "$workingFolder/temp" > /dev/null 2>&1
 URLGTFS="https://www.comune.palermo.it/gtfs/amat_feed_gtfs.zip"
 
 # download the GTFS file
+echo "Starting the GTFS download"
 curl -sL "$URLGTFS" > "$workingFolder/$fileName.zip"
 
 # unzip the GTFS file
@@ -53,6 +54,8 @@ rm "$workingFolder/$output/stops.geojson" > /dev/null 2>&1
 ogr2ogr -f geojson -oo AUTODETECT_TYPE=YES -oo X_POSSIBLE_NAMES=stop_lon -oo Y_POSSIBLE_NAMES=stop_lat -a_srs "+proj=longlat +datum=WGS84 +no_defs" "$workingFolder/$output/stops.geojson" "$workingFolder/$output/stops.csv"
 
 # create a spatialite file and import the stops table inside it. The imported stops table will be a spatial table
+echo "Creating the spatialite file and importing the GTFS file"
+
 ogr2ogr -f SQLite -dsco SPATIALITE=YES -nln "stops" -oo AUTODETECT_TYPE=YES -oo X_POSSIBLE_NAMES=stop_lon -oo Y_POSSIBLE_NAMES=stop_lat -a_srs "+proj=longlat +datum=WGS84 +no_defs" "$workingFolder/$output/$fileName.sqlite" "$workingFolder/$output/stops.csv"
 rm "$workingFolder/$output/stops.csv"
 
@@ -72,6 +75,7 @@ rm "$workingFolder/$output/"*.csv
 rm "$workingFolder/$fileName/routes.csv"
 
 # create a file .sql useful to create the spatial routes table
+echo "Making spatial the routes spatialite table"
 Qrotte=${PWD}/temp/qrotte.sql
 
 cat <<EOF > "$Qrotte"
@@ -110,6 +114,7 @@ EOF
 spatialite "${PWD}""/$output/$fileName.sqlite" < "$Qrotte"  > /dev/null 2>&1
 
 # export routes GeoJSON file
+echo "Exporting GTFS and kml stops and routes file"
 rm "${PWD}""/$output/routes.geojson" > /dev/null 2>&1
 ogr2ogr -f geojson "${PWD}""/$output/routes.geojson" "${PWD}""/$output/$fileName.sqlite" routes
 
@@ -118,7 +123,6 @@ ogr2ogr -f KML -dsco NameField=route_short_name -dsco DescriptionField=route_lon
 ogr2ogr -f KML -dsco NameField=stop_code -dsco DescriptionField=stop_name "${PWD}""/$output/stops.kml" "${PWD}""/$output/$fileName.sqlite" stops
 
 # create route_type table and import it in the spatialite file
-
 rType=${PWD}/temp/rType.csv
 
 cat <<EOF > "$rType"
@@ -137,6 +141,7 @@ EOF
 ogr2ogr -update -f SQLite -nln "route_type" -oo AUTODETECT_TYPE=YES "$workingFolder/$output/$fileName.sqlite" "$workingFolder/temp/rType.csv"
 
 # create a sql file useful to create some GTFS report tables
+echo "Creating report tables"
 
 rSQL=${PWD}/temp/rSQL.sql
 
@@ -213,9 +218,31 @@ EOF
 # execute the rSQL.sql query
 spatialite "${PWD}""/$output/$fileName.sqlite" < "$rSQL"  > /dev/null 2>&1
 
+
+### report part ###
+
+rReport="${PWD}/temp/rReport.sql"
+
+cat <<EOF > "$rReport"
+.output stdout
+.table
+EOF
+
+# execute query using the created qrotte.sql file
+list=$(spatialite "${PWD}""/$output/$fileName.sqlite" < "$rReport" | grep -oP '\bz_.*?\b' | sed ':a;N;$!ba;s/\n/ /g')
+
+for VARIABLE in $list
+do
+    ogr2ogr -f CSV "${PWD}/$output/""$VARIABLE.csv" "${PWD}""/$output/$fileName.sqlite" "$VARIABLE"
+done
+
+### report part ###
+
 # remove the temp folder and the downloaded GFTS zip file
 rm -rf "$workingFolder/temp"
 rm "$workingFolder/$fileName.zip"
+
+echo "Finished"
 
 else   
    echo "The script works only with a GTFS file that has inside the shapes.txt file"
