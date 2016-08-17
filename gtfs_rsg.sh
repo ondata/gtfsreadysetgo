@@ -54,7 +54,7 @@ rm "$workingFolder/$output/stops.geojson" > /dev/null 2>&1
 ogr2ogr -f geojson -oo AUTODETECT_TYPE=YES -oo X_POSSIBLE_NAMES=stop_lon -oo Y_POSSIBLE_NAMES=stop_lat -a_srs "+proj=longlat +datum=WGS84 +no_defs" "$workingFolder/$output/stops.geojson" "$workingFolder/$output/stops.csv"
 
 # create a spatialite file and import the stops table inside it. The imported stops table will be a spatial table
-echo "Creating the spatialite file and importing the GTFS file"
+echo "Creating the spatialite file and importing the GTFS files"
 
 ogr2ogr -f SQLite -dsco SPATIALITE=YES -nln "stops" -oo AUTODETECT_TYPE=YES -oo X_POSSIBLE_NAMES=stop_lon -oo Y_POSSIBLE_NAMES=stop_lat -a_srs "+proj=longlat +datum=WGS84 +no_defs" "$workingFolder/$output/$fileName.sqlite" "$workingFolder/$output/stops.csv"
 rm "$workingFolder/$output/stops.csv"
@@ -231,9 +231,10 @@ EOF
 # execute query using the created rReport.sql file
 list=$(spatialite "${PWD}""/$output/$fileName.sqlite" < "$rReport" | grep -oP '\bz_.*?\b' | sed ':a;N;$!ba;s/\n/ /g')
 
+mkdir "${PWD}/$output/report"
 for VARIABLE in $list
 do
-    ogr2ogr -f CSV "${PWD}/$output/""$VARIABLE.csv" "${PWD}""/$output/$fileName.sqlite" "$VARIABLE"
+    ogr2ogr -f CSV "${PWD}/$output/report/""$VARIABLE.csv" "${PWD}""/$output/$fileName.sqlite" "$VARIABLE"
 done
 
 ### stop of the reporting part ###
