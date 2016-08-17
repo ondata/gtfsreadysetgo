@@ -162,7 +162,7 @@ FROM routes AS "r"
 JOIN route_type AS "t" 
 ON r.route_type = t.route_type
 GROUP BY t.route_type_desc;
-/* Numero di fermate per rotta */
+/* Number of stops by route */
 Create table z_StopsNumber_by_Route AS
 SELECT route_id, route_type.route_type_name type, count(*) stopsNumber
 FROM
@@ -183,7 +183,7 @@ order by route_id,direction_id,stop_sequence)
 JOIN routes using (route_id)
 JOIN route_type using (route_type)
 GROUP by route_id;
-/* Numero di fermate per tipo */
+/* Number of stops by mode*/
 Create table z_StopsNumber_by_Type AS
 SELECT type,sum(stopsNumber) stopsNumber
 FROM
@@ -219,7 +219,7 @@ EOF
 spatialite "${PWD}""/$output/$fileName.sqlite" < "$rSQL"  > /dev/null 2>&1
 
 
-### report part ###
+### start of the reporting part ###
 
 rReport="${PWD}/temp/rReport.sql"
 
@@ -228,7 +228,7 @@ cat <<EOF > "$rReport"
 .table
 EOF
 
-# execute query using the created qrotte.sql file
+# execute query using the created rReport.sql file
 list=$(spatialite "${PWD}""/$output/$fileName.sqlite" < "$rReport" | grep -oP '\bz_.*?\b' | sed ':a;N;$!ba;s/\n/ /g')
 
 for VARIABLE in $list
@@ -236,7 +236,7 @@ do
     ogr2ogr -f CSV "${PWD}/$output/""$VARIABLE.csv" "${PWD}""/$output/$fileName.sqlite" "$VARIABLE"
 done
 
-### report part ###
+### stop of the reporting part ###
 
 # remove the temp folder and the downloaded GFTS zip file
 rm -rf "$workingFolder/temp"
@@ -247,8 +247,6 @@ echo "Finished"
 else   
    echo "The script works only with a GTFS file that has inside the shapes.txt file"
 fi
-
-
 
 <<COMMENT1
 COMMENT1
