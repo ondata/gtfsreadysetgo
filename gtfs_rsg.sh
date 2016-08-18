@@ -234,10 +234,10 @@ rReportMeta="$workingFolder/temp/rReportMeta.csv"
 
 cat <<EOF > "$rReportMeta"
 table_name,title,used_tables,description
-z_RoutesNumber_by_types,Number of routes by types,x,x
 z_Transit_system_in_km,Transit system length in km,x,x
-z_StopsNumber_by_Route,Number of stops by route,x,x
+z_RoutesNumber_by_types,Number of routes by types,x,x
 z_StopsNumber_by_Type,Number of stops by type,x,x
+z_StopsNumber_by_Route,Number of stops by route,x,x
 z_Stops_by_route_length,Average distance between stops in m,x,x
 EOF
 
