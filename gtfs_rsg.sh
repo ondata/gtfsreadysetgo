@@ -1,10 +1,12 @@
 #!/bin/bash
 
 ### requirements
-# gdal >= 2.1
-# spatialite
+# GDAL - Geospatial Data Abstraction Library >= 2.1 | http://www.gdal.org/
+# spatialite | https://www.gaia-gis.it/fossil/spatialite-tools/index
 # unzip
 # curl
+# csvtk https://github.com/shenwei356/csvtk
+# pandoc | http://pandoc.org/
 ### requirements
 
 
@@ -141,7 +143,7 @@ EOF
 ogr2ogr -update -f SQLite -nln "route_type" -oo AUTODETECT_TYPE=YES "$workingFolder/$output/$fileName.sqlite" "$workingFolder/temp/rType.csv"
 
 # create a sql file useful to create some GTFS report tables
-echo "Creating report tables"
+echo "Creating spatialite report tables"
 
 rSQL=${PWD}/temp/rSQL.sql
 
@@ -157,7 +159,7 @@ GROUP BY t.route_type_desc;
 CREATE table z_Transit_system_in_km AS 
 SELECT "t"."route_type_name" AS "route_type_name", "t"."route_type_desc" AS "route_type_desc", 
 count(*) AS routesNumber, 
-SUM(GeodesicLength(r.geometry))/1000 AS lunghezzaKm
+SUM(GeodesicLength(r.geometry))/1000 AS lenghtKm
 FROM routes AS "r" 
 JOIN route_type AS "t" 
 ON r.route_type = t.route_type
@@ -228,6 +230,18 @@ cat <<EOF > "$rReport"
 .table
 EOF
 
+rReportMeta="${PWD}/$output/rReportMeta.csv"
+
+cat <<EOF > "$rReportMeta"
+table_name,title,used_tables,description
+z_RoutesNumber_by_types,Number of routes by types,x,x
+z_Transit_system_in_km,Transit system length in km,x,x
+z_StopsNumber_by_Route,Number of stops by route,x,x
+z_StopsNumber_by_Type,Number of stops by type,x,x
+z_Stops_by_route_length,Average distance between stops in m,x,x
+EOF
+
+echo "Exporting CSV and markdown report files"
 # execute query using the created rReport.sql file
 list=$(spatialite "${PWD}""/$output/$fileName.sqlite" < "$rReport" | grep -oP '\bz_.*?\b' | sed ':a;N;$!ba;s/\n/ /g')
 
@@ -237,7 +251,34 @@ do
     ogr2ogr -f CSV "${PWD}/$output/report/""$VARIABLE.csv" "${PWD}""/$output/$fileName.sqlite" "$VARIABLE"
 done
 
-### stop of the reporting part ###
+# create the markdown files for csv report tables
+for file in "${PWD}/$output/report/"*.csv
+do
+    filename=$(basename "$file")
+    extension="${filename##*.}"
+    filename="${filename%.*}"
+    csvtk csv2md "${PWD}/$output/report/$filename.csv" > "${PWD}/$output/report/$filename.md"
+done
+
+sed -i -e "1d" "${PWD}/$output/rReportMeta.csv"
+#rm "${PWD}/$output/report/report.md"
+INPUT="${PWD}/$output/rReportMeta.csv"
+OLDIFS=$IFS
+IFS=,
+[ ! -f $INPUT ] && { echo "$INPUT file not found"; exit 99; }
+while read table_name title used_tables description
+do
+    echo -e "## $title\n" >> "${PWD}/$output/report/report.md"
+    cat "${PWD}/$output/report/$table_name.md" >> "${PWD}/$output/report/report.md"
+    echo -e "\n----------\n" >> "${PWD}/$output/report/report.md"
+done < $INPUT
+IFS=$OLDIFS
+
+export GHCRTS=-V0
+
+pandoc -f markdown_github --smart -s --toc "${PWD}/$output/report/report.md" > "${PWD}/$output/report/report.html"
+
+### end of the reporting part ###
 
 # remove the temp folder and the downloaded GFTS zip file
 rm -rf "$workingFolder/temp"
@@ -250,4 +291,5 @@ else
 fi
 
 <<COMMENT1
+
 COMMENT1

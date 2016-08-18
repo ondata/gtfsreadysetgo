@@ -1,0 +1,958 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<div id="TOC">
+<ul>
+<li><a href="#number-of-routes-by-types">Number of routes by types</a></li>
+<li><a href="#transit-system-length-in-km">Transit system length in km</a></li>
+<li><a href="#number-of-stops-by-route">Number of stops by route</a></li>
+<li><a href="#number-of-stops-by-type">Number of stops by type</a></li>
+<li><a href="#average-distance-between-stops-in-m">Average distance between stops in m</a></li>
+</ul>
+</div>
+<h2 id="number-of-routes-by-types"><a href="#number-of-routes-by-types">Number of routes by types</a></h2>
+<table>
+<thead>
+<tr class="header">
+<th align="left">route_type_name</th>
+<th align="left">route_type_desc</th>
+<th align="left">routesNumber</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Tram, Streetcar, Light rail</td>
+<td align="left">Any light rail or street level system within a metropolitan area</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">Bus</td>
+<td align="left">Used for short- and long-distance bus routes</td>
+<td align="left">66</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="transit-system-length-in-km"><a href="#transit-system-length-in-km">Transit system length in km</a></h2>
+<table>
+<thead>
+<tr class="header">
+<th align="left">route_type_name</th>
+<th align="left">route_type_desc</th>
+<th align="left">routesNumber</th>
+<th align="left">lenghtKm</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Tram, Streetcar, Light rail</td>
+<td align="left">Any light rail or street level system within a metropolitan area</td>
+<td align="left">4</td>
+<td align="left">39.1856860499399</td>
+</tr>
+<tr class="even">
+<td align="left">Bus</td>
+<td align="left">Used for short- and long-distance bus routes</td>
+<td align="left">66</td>
+<td align="left">1047.55967044287</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="number-of-stops-by-route"><a href="#number-of-stops-by-route">Number of stops by route</a></h2>
+<table>
+<thead>
+<tr class="header">
+<th align="left">route_id</th>
+<th align="left">type</th>
+<th align="left">stopsNumber</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">100</td>
+<td align="left">Bus</td>
+<td align="left">109</td>
+</tr>
+<tr class="even">
+<td align="left">101</td>
+<td align="left">Bus</td>
+<td align="left">50</td>
+</tr>
+<tr class="odd">
+<td align="left">102</td>
+<td align="left">Bus</td>
+<td align="left">31</td>
+</tr>
+<tr class="even">
+<td align="left">103</td>
+<td align="left">Bus</td>
+<td align="left">45</td>
+</tr>
+<tr class="odd">
+<td align="left">104</td>
+<td align="left">Bus</td>
+<td align="left">41</td>
+</tr>
+<tr class="even">
+<td align="left">106</td>
+<td align="left">Bus</td>
+<td align="left">56</td>
+</tr>
+<tr class="odd">
+<td align="left">107</td>
+<td align="left">Bus</td>
+<td align="left">61</td>
+</tr>
+<tr class="even">
+<td align="left">108</td>
+<td align="left">Bus</td>
+<td align="left">52</td>
+</tr>
+<tr class="odd">
+<td align="left">109</td>
+<td align="left">Bus</td>
+<td align="left">29</td>
+</tr>
+<tr class="even">
+<td align="left">110</td>
+<td align="left">Bus</td>
+<td align="left">34</td>
+</tr>
+<tr class="odd">
+<td align="left">118</td>
+<td align="left">Bus</td>
+<td align="left">38</td>
+</tr>
+<tr class="even">
+<td align="left">124</td>
+<td align="left">Bus</td>
+<td align="left">32</td>
+</tr>
+<tr class="odd">
+<td align="left">134</td>
+<td align="left">Bus</td>
+<td align="left">33</td>
+</tr>
+<tr class="even">
+<td align="left">209</td>
+<td align="left">Bus</td>
+<td align="left">33</td>
+</tr>
+<tr class="odd">
+<td align="left">210</td>
+<td align="left">Bus</td>
+<td align="left">46</td>
+</tr>
+<tr class="even">
+<td align="left">212</td>
+<td align="left">Bus</td>
+<td align="left">51</td>
+</tr>
+<tr class="odd">
+<td align="left">224</td>
+<td align="left">Bus</td>
+<td align="left">69</td>
+</tr>
+<tr class="even">
+<td align="left">224P</td>
+<td align="left">Bus</td>
+<td align="left">82</td>
+</tr>
+<tr class="odd">
+<td align="left">226</td>
+<td align="left">Bus</td>
+<td align="left">38</td>
+</tr>
+<tr class="even">
+<td align="left">230</td>
+<td align="left">Bus</td>
+<td align="left">87</td>
+</tr>
+<tr class="odd">
+<td align="left">231</td>
+<td align="left">Bus</td>
+<td align="left">67</td>
+</tr>
+<tr class="even">
+<td align="left">234</td>
+<td align="left">Bus</td>
+<td align="left">70</td>
+</tr>
+<tr class="odd">
+<td align="left">237</td>
+<td align="left">Bus</td>
+<td align="left">24</td>
+</tr>
+<tr class="even">
+<td align="left">241</td>
+<td align="left">Bus</td>
+<td align="left">43</td>
+</tr>
+<tr class="odd">
+<td align="left">243</td>
+<td align="left">Bus</td>
+<td align="left">51</td>
+</tr>
+<tr class="even">
+<td align="left">246</td>
+<td align="left">Bus</td>
+<td align="left">23</td>
+</tr>
+<tr class="odd">
+<td align="left">304</td>
+<td align="left">Bus</td>
+<td align="left">27</td>
+</tr>
+<tr class="even">
+<td align="left">307</td>
+<td align="left">Bus</td>
+<td align="left">71</td>
+</tr>
+<tr class="odd">
+<td align="left">309</td>
+<td align="left">Bus</td>
+<td align="left">59</td>
+</tr>
+<tr class="even">
+<td align="left">327</td>
+<td align="left">Bus</td>
+<td align="left">32</td>
+</tr>
+<tr class="odd">
+<td align="left">364</td>
+<td align="left">Bus</td>
+<td align="left">40</td>
+</tr>
+<tr class="even">
+<td align="left">380</td>
+<td align="left">Bus</td>
+<td align="left">40</td>
+</tr>
+<tr class="odd">
+<td align="left">389</td>
+<td align="left">Bus</td>
+<td align="left">57</td>
+</tr>
+<tr class="even">
+<td align="left">422</td>
+<td align="left">Bus</td>
+<td align="left">54</td>
+</tr>
+<tr class="odd">
+<td align="left">442</td>
+<td align="left">Bus</td>
+<td align="left">35</td>
+</tr>
+<tr class="even">
+<td align="left">462</td>
+<td align="left">Bus</td>
+<td align="left">55</td>
+</tr>
+<tr class="odd">
+<td align="left">513</td>
+<td align="left">Bus</td>
+<td align="left">46</td>
+</tr>
+<tr class="even">
+<td align="left">529</td>
+<td align="left">Bus</td>
+<td align="left">34</td>
+</tr>
+<tr class="odd">
+<td align="left">534</td>
+<td align="left">Bus</td>
+<td align="left">61</td>
+</tr>
+<tr class="even">
+<td align="left">544</td>
+<td align="left">Bus</td>
+<td align="left">77</td>
+</tr>
+<tr class="odd">
+<td align="left">603</td>
+<td align="left">Bus</td>
+<td align="left">104</td>
+</tr>
+<tr class="even">
+<td align="left">606</td>
+<td align="left">Bus</td>
+<td align="left">45</td>
+</tr>
+<tr class="odd">
+<td align="left">614</td>
+<td align="left">Bus</td>
+<td align="left">86</td>
+</tr>
+<tr class="even">
+<td align="left">616</td>
+<td align="left">Bus</td>
+<td align="left">81</td>
+</tr>
+<tr class="odd">
+<td align="left">619</td>
+<td align="left">Bus</td>
+<td align="left">55</td>
+</tr>
+<tr class="even">
+<td align="left">625</td>
+<td align="left">Bus</td>
+<td align="left">54</td>
+</tr>
+<tr class="odd">
+<td align="left">628</td>
+<td align="left">Bus</td>
+<td align="left">81</td>
+</tr>
+<tr class="even">
+<td align="left">628P</td>
+<td align="left">Bus</td>
+<td align="left">86</td>
+</tr>
+<tr class="odd">
+<td align="left">645</td>
+<td align="left">Bus</td>
+<td align="left">68</td>
+</tr>
+<tr class="even">
+<td align="left">675</td>
+<td align="left">Bus</td>
+<td align="left">20</td>
+</tr>
+<tr class="odd">
+<td align="left">704</td>
+<td align="left">Bus</td>
+<td align="left">49</td>
+</tr>
+<tr class="even">
+<td align="left">721</td>
+<td align="left">Bus</td>
+<td align="left">31</td>
+</tr>
+<tr class="odd">
+<td align="left">731</td>
+<td align="left">Bus</td>
+<td align="left">49</td>
+</tr>
+<tr class="even">
+<td align="left">806</td>
+<td align="left">Bus</td>
+<td align="left">50</td>
+</tr>
+<tr class="odd">
+<td align="left">812</td>
+<td align="left">Bus</td>
+<td align="left">54</td>
+</tr>
+<tr class="even">
+<td align="left">84</td>
+<td align="left">Bus</td>
+<td align="left">25</td>
+</tr>
+<tr class="odd">
+<td align="left">85</td>
+<td align="left">Bus</td>
+<td align="left">39</td>
+</tr>
+<tr class="even">
+<td align="left">87</td>
+<td align="left">Bus</td>
+<td align="left">44</td>
+</tr>
+<tr class="odd">
+<td align="left">88</td>
+<td align="left">Bus</td>
+<td align="left">26</td>
+</tr>
+<tr class="even">
+<td align="left">ARANC</td>
+<td align="left">Bus</td>
+<td align="left">31</td>
+</tr>
+<tr class="odd">
+<td align="left">EXPR</td>
+<td align="left">Bus</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td align="left">H2</td>
+<td align="left">Bus</td>
+<td align="left">87</td>
+</tr>
+<tr class="odd">
+<td align="left">N11_merged_80001</td>
+<td align="left">Bus</td>
+<td align="left">141</td>
+</tr>
+<tr class="even">
+<td align="left">N11_merged_80002</td>
+<td align="left">Bus</td>
+<td align="left">141</td>
+</tr>
+<tr class="odd">
+<td align="left">N12</td>
+<td align="left">Bus</td>
+<td align="left">210</td>
+</tr>
+<tr class="even">
+<td align="left">N21</td>
+<td align="left">Bus</td>
+<td align="left">82</td>
+</tr>
+<tr class="odd">
+<td align="left">TRAM1</td>
+<td align="left">Tram, Streetcar, Light rail</td>
+<td align="left">29</td>
+</tr>
+<tr class="even">
+<td align="left">TRAM2</td>
+<td align="left">Tram, Streetcar, Light rail</td>
+<td align="left">25</td>
+</tr>
+<tr class="odd">
+<td align="left">TRAM3</td>
+<td align="left">Tram, Streetcar, Light rail</td>
+<td align="left">22</td>
+</tr>
+<tr class="even">
+<td align="left">TRAM4</td>
+<td align="left">Tram, Streetcar, Light rail</td>
+<td align="left">21</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="number-of-stops-by-type"><a href="#number-of-stops-by-type">Number of stops by type</a></h2>
+<table>
+<thead>
+<tr class="header">
+<th align="left">type</th>
+<th align="left">stopsNumber</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Bus</td>
+<td align="left">3724</td>
+</tr>
+<tr class="even">
+<td align="left">Tram, Streetcar, Light rail</td>
+<td align="left">97</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="average-distance-between-stops-in-m"><a href="#average-distance-between-stops-in-m">Average distance between stops in m</a></h2>
+<table>
+<thead>
+<tr class="header">
+<th align="left">route_id</th>
+<th align="left">type</th>
+<th align="left">stopsNumber</th>
+<th align="left">Length</th>
+<th align="left">stopsByRouteLength</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">100</td>
+<td align="left">Bus</td>
+<td align="left">109</td>
+<td align="left">36095.4835444849</td>
+<td align="left">331.15122517876</td>
+</tr>
+<tr class="even">
+<td align="left">101</td>
+<td align="left">Bus</td>
+<td align="left">50</td>
+<td align="left">12371.9268421923</td>
+<td align="left">247.438536843846</td>
+</tr>
+<tr class="odd">
+<td align="left">102</td>
+<td align="left">Bus</td>
+<td align="left">31</td>
+<td align="left">8039.19263877465</td>
+<td align="left">259.328794799182</td>
+</tr>
+<tr class="even">
+<td align="left">103</td>
+<td align="left">Bus</td>
+<td align="left">45</td>
+<td align="left">11577.5596814578</td>
+<td align="left">257.279104032395</td>
+</tr>
+<tr class="odd">
+<td align="left">104</td>
+<td align="left">Bus</td>
+<td align="left">41</td>
+<td align="left">12368.5567912035</td>
+<td align="left">301.672116858621</td>
+</tr>
+<tr class="even">
+<td align="left">106</td>
+<td align="left">Bus</td>
+<td align="left">56</td>
+<td align="left">14034.8143089623</td>
+<td align="left">250.621684088612</td>
+</tr>
+<tr class="odd">
+<td align="left">107</td>
+<td align="left">Bus</td>
+<td align="left">61</td>
+<td align="left">17572.4485402615</td>
+<td align="left">288.072926889533</td>
+</tr>
+<tr class="even">
+<td align="left">108</td>
+<td align="left">Bus</td>
+<td align="left">52</td>
+<td align="left">13756.9588460953</td>
+<td align="left">264.556900886447</td>
+</tr>
+<tr class="odd">
+<td align="left">109</td>
+<td align="left">Bus</td>
+<td align="left">29</td>
+<td align="left">7442.84701442981</td>
+<td align="left">256.649897049304</td>
+</tr>
+<tr class="even">
+<td align="left">110</td>
+<td align="left">Bus</td>
+<td align="left">34</td>
+<td align="left">9080.98648274933</td>
+<td align="left">267.087837727922</td>
+</tr>
+<tr class="odd">
+<td align="left">118</td>
+<td align="left">Bus</td>
+<td align="left">38</td>
+<td align="left">10926.5421814419</td>
+<td align="left">287.540583722156</td>
+</tr>
+<tr class="even">
+<td align="left">124</td>
+<td align="left">Bus</td>
+<td align="left">32</td>
+<td align="left">8168.84229900345</td>
+<td align="left">255.276321843858</td>
+</tr>
+<tr class="odd">
+<td align="left">134</td>
+<td align="left">Bus</td>
+<td align="left">33</td>
+<td align="left">9716.05186368726</td>
+<td align="left">294.425814051129</td>
+</tr>
+<tr class="even">
+<td align="left">209</td>
+<td align="left">Bus</td>
+<td align="left">33</td>
+<td align="left">8289.08007405865</td>
+<td align="left">251.184244668444</td>
+</tr>
+<tr class="odd">
+<td align="left">210</td>
+<td align="left">Bus</td>
+<td align="left">46</td>
+<td align="left">13407.0436437168</td>
+<td align="left">291.457470515582</td>
+</tr>
+<tr class="even">
+<td align="left">212</td>
+<td align="left">Bus</td>
+<td align="left">51</td>
+<td align="left">11888.3729642734</td>
+<td align="left">233.105352240655</td>
+</tr>
+<tr class="odd">
+<td align="left">224</td>
+<td align="left">Bus</td>
+<td align="left">69</td>
+<td align="left">17214.4174424714</td>
+<td align="left">249.484310760454</td>
+</tr>
+<tr class="even">
+<td align="left">224P</td>
+<td align="left">Bus</td>
+<td align="left">82</td>
+<td align="left">20187.0875675192</td>
+<td align="left">246.183994725844</td>
+</tr>
+<tr class="odd">
+<td align="left">226</td>
+<td align="left">Bus</td>
+<td align="left">38</td>
+<td align="left">11263.6477926848</td>
+<td align="left">296.411784018022</td>
+</tr>
+<tr class="even">
+<td align="left">230</td>
+<td align="left">Bus</td>
+<td align="left">87</td>
+<td align="left">20609.0906542977</td>
+<td align="left">236.886099474686</td>
+</tr>
+<tr class="odd">
+<td align="left">231</td>
+<td align="left">Bus</td>
+<td align="left">67</td>
+<td align="left">16952.2506387664</td>
+<td align="left">253.018666250245</td>
+</tr>
+<tr class="even">
+<td align="left">234</td>
+<td align="left">Bus</td>
+<td align="left">70</td>
+<td align="left">20356.1320527021</td>
+<td align="left">290.801886467174</td>
+</tr>
+<tr class="odd">
+<td align="left">237</td>
+<td align="left">Bus</td>
+<td align="left">24</td>
+<td align="left">5161.52339644439</td>
+<td align="left">215.06347485185</td>
+</tr>
+<tr class="even">
+<td align="left">241</td>
+<td align="left">Bus</td>
+<td align="left">43</td>
+<td align="left">11897.0229149638</td>
+<td align="left">276.674951510786</td>
+</tr>
+<tr class="odd">
+<td align="left">243</td>
+<td align="left">Bus</td>
+<td align="left">51</td>
+<td align="left">11465.7840481595</td>
+<td align="left">224.819295061951</td>
+</tr>
+<tr class="even">
+<td align="left">246</td>
+<td align="left">Bus</td>
+<td align="left">23</td>
+<td align="left">6027.32364605968</td>
+<td align="left">262.057549828682</td>
+</tr>
+<tr class="odd">
+<td align="left">304</td>
+<td align="left">Bus</td>
+<td align="left">27</td>
+<td align="left">6400.94465457233</td>
+<td align="left">237.07202424342</td>
+</tr>
+<tr class="even">
+<td align="left">307</td>
+<td align="left">Bus</td>
+<td align="left">71</td>
+<td align="left">23074.1309733668</td>
+<td align="left">324.987760188265</td>
+</tr>
+<tr class="odd">
+<td align="left">309</td>
+<td align="left">Bus</td>
+<td align="left">59</td>
+<td align="left">13498.7761641468</td>
+<td align="left">228.792816341471</td>
+</tr>
+<tr class="even">
+<td align="left">327</td>
+<td align="left">Bus</td>
+<td align="left">32</td>
+<td align="left">9989.41401121379</td>
+<td align="left">312.169187850431</td>
+</tr>
+<tr class="odd">
+<td align="left">364</td>
+<td align="left">Bus</td>
+<td align="left">40</td>
+<td align="left">11475.3647308962</td>
+<td align="left">286.884118272404</td>
+</tr>
+<tr class="even">
+<td align="left">380</td>
+<td align="left">Bus</td>
+<td align="left">40</td>
+<td align="left">12736.5102220633</td>
+<td align="left">318.412755551582</td>
+</tr>
+<tr class="odd">
+<td align="left">389</td>
+<td align="left">Bus</td>
+<td align="left">57</td>
+<td align="left">13544.8069446784</td>
+<td align="left">237.628192011901</td>
+</tr>
+<tr class="even">
+<td align="left">422</td>
+<td align="left">Bus</td>
+<td align="left">54</td>
+<td align="left">17448.0984010615</td>
+<td align="left">323.11293335299</td>
+</tr>
+<tr class="odd">
+<td align="left">442</td>
+<td align="left">Bus</td>
+<td align="left">35</td>
+<td align="left">8323.50550504384</td>
+<td align="left">237.814443001253</td>
+</tr>
+<tr class="even">
+<td align="left">462</td>
+<td align="left">Bus</td>
+<td align="left">55</td>
+<td align="left">14638.8248909754</td>
+<td align="left">266.160452563189</td>
+</tr>
+<tr class="odd">
+<td align="left">513</td>
+<td align="left">Bus</td>
+<td align="left">46</td>
+<td align="left">11717.7650438488</td>
+<td align="left">254.734022692364</td>
+</tr>
+<tr class="even">
+<td align="left">529</td>
+<td align="left">Bus</td>
+<td align="left">34</td>
+<td align="left">9982.02100088408</td>
+<td align="left">293.588852967179</td>
+</tr>
+<tr class="odd">
+<td align="left">534</td>
+<td align="left">Bus</td>
+<td align="left">61</td>
+<td align="left">16813.3720456002</td>
+<td align="left">275.629049927872</td>
+</tr>
+<tr class="even">
+<td align="left">544</td>
+<td align="left">Bus</td>
+<td align="left">77</td>
+<td align="left">22547.0247754158</td>
+<td align="left">292.818503576829</td>
+</tr>
+<tr class="odd">
+<td align="left">603</td>
+<td align="left">Bus</td>
+<td align="left">104</td>
+<td align="left">27721.6419825321</td>
+<td align="left">266.554249832039</td>
+</tr>
+<tr class="even">
+<td align="left">606</td>
+<td align="left">Bus</td>
+<td align="left">45</td>
+<td align="left">19733.5635831621</td>
+<td align="left">438.52363518138</td>
+</tr>
+<tr class="odd">
+<td align="left">614</td>
+<td align="left">Bus</td>
+<td align="left">86</td>
+<td align="left">26373.4491318918</td>
+<td align="left">306.668013161532</td>
+</tr>
+<tr class="even">
+<td align="left">616</td>
+<td align="left">Bus</td>
+<td align="left">81</td>
+<td align="left">25875.4075938053</td>
+<td align="left">319.449476466732</td>
+</tr>
+<tr class="odd">
+<td align="left">619</td>
+<td align="left">Bus</td>
+<td align="left">55</td>
+<td align="left">13705.3128396143</td>
+<td align="left">249.187506174805</td>
+</tr>
+<tr class="even">
+<td align="left">625</td>
+<td align="left">Bus</td>
+<td align="left">54</td>
+<td align="left">14818.595275128</td>
+<td align="left">274.418431020889</td>
+</tr>
+<tr class="odd">
+<td align="left">628</td>
+<td align="left">Bus</td>
+<td align="left">81</td>
+<td align="left">19770.8609799849</td>
+<td align="left">244.084703456604</td>
+</tr>
+<tr class="even">
+<td align="left">628P</td>
+<td align="left">Bus</td>
+<td align="left">86</td>
+<td align="left">23760.0902528476</td>
+<td align="left">276.280119219158</td>
+</tr>
+<tr class="odd">
+<td align="left">645</td>
+<td align="left">Bus</td>
+<td align="left">68</td>
+<td align="left">19621.6984503131</td>
+<td align="left">288.554388975192</td>
+</tr>
+<tr class="even">
+<td align="left">675</td>
+<td align="left">Bus</td>
+<td align="left">20</td>
+<td align="left">7387.19336050635</td>
+<td align="left">369.359668025318</td>
+</tr>
+<tr class="odd">
+<td align="left">704</td>
+<td align="left">Bus</td>
+<td align="left">49</td>
+<td align="left">11284.5655846101</td>
+<td align="left">230.297256828777</td>
+</tr>
+<tr class="even">
+<td align="left">721</td>
+<td align="left">Bus</td>
+<td align="left">31</td>
+<td align="left">8121.24076240487</td>
+<td align="left">261.975508464673</td>
+</tr>
+<tr class="odd">
+<td align="left">731</td>
+<td align="left">Bus</td>
+<td align="left">49</td>
+<td align="left">12460.0316856837</td>
+<td align="left">254.286360932321</td>
+</tr>
+<tr class="even">
+<td align="left">806</td>
+<td align="left">Bus</td>
+<td align="left">50</td>
+<td align="left">21391.5863695995</td>
+<td align="left">427.83172739199</td>
+</tr>
+<tr class="odd">
+<td align="left">812</td>
+<td align="left">Bus</td>
+<td align="left">54</td>
+<td align="left">30771.8494531481</td>
+<td align="left">569.849063947188</td>
+</tr>
+<tr class="even">
+<td align="left">84</td>
+<td align="left">Bus</td>
+<td align="left">25</td>
+<td align="left">5477.52351302762</td>
+<td align="left">219.100940521105</td>
+</tr>
+<tr class="odd">
+<td align="left">85</td>
+<td align="left">Bus</td>
+<td align="left">39</td>
+<td align="left">9441.46860530129</td>
+<td align="left">242.088938597469</td>
+</tr>
+<tr class="even">
+<td align="left">87</td>
+<td align="left">Bus</td>
+<td align="left">44</td>
+<td align="left">9706.4302605818</td>
+<td align="left">220.600687740495</td>
+</tr>
+<tr class="odd">
+<td align="left">88</td>
+<td align="left">Bus</td>
+<td align="left">26</td>
+<td align="left">6218.48484949352</td>
+<td align="left">239.172494211289</td>
+</tr>
+<tr class="even">
+<td align="left">ARANC</td>
+<td align="left">Bus</td>
+<td align="left">31</td>
+<td align="left">8317.84690098656</td>
+<td align="left">268.317641967309</td>
+</tr>
+<tr class="odd">
+<td align="left">EXPR</td>
+<td align="left">Bus</td>
+<td align="left">2</td>
+<td align="left">4895.37951812087</td>
+<td align="left">2447.68975906044</td>
+</tr>
+<tr class="even">
+<td align="left">H2</td>
+<td align="left">Bus</td>
+<td align="left">87</td>
+<td align="left">23286.8795922614</td>
+<td align="left">267.665282669671</td>
+</tr>
+<tr class="odd">
+<td align="left">N11_merged_80001</td>
+<td align="left">Bus</td>
+<td align="left">141</td>
+<td align="left">40718.4523747912</td>
+<td align="left">288.783350175824</td>
+</tr>
+<tr class="even">
+<td align="left">N11_merged_80002</td>
+<td align="left">Bus</td>
+<td align="left">141</td>
+<td align="left">40718.4523747912</td>
+<td align="left">288.783350175824</td>
+</tr>
+<tr class="odd">
+<td align="left">N12</td>
+<td align="left">Bus</td>
+<td align="left">210</td>
+<td align="left">56765.2751535152</td>
+<td align="left">270.310834064358</td>
+</tr>
+<tr class="even">
+<td align="left">N21</td>
+<td align="left">Bus</td>
+<td align="left">82</td>
+<td align="left">21154.8427601347</td>
+<td align="left">257.985887318715</td>
+</tr>
+<tr class="odd">
+<td align="left">TRAM1</td>
+<td align="left">Tram, Streetcar, Light rail</td>
+<td align="left">29</td>
+<td align="left">10984.4348389615</td>
+<td align="left">378.773615136604</td>
+</tr>
+<tr class="even">
+<td align="left">TRAM2</td>
+<td align="left">Tram, Streetcar, Light rail</td>
+<td align="left">25</td>
+<td align="left">9831.03839960976</td>
+<td align="left">393.24153598439</td>
+</tr>
+<tr class="odd">
+<td align="left">TRAM3</td>
+<td align="left">Tram, Streetcar, Light rail</td>
+<td align="left">22</td>
+<td align="left">10015.8069159245</td>
+<td align="left">455.263950723841</td>
+</tr>
+<tr class="even">
+<td align="left">TRAM4</td>
+<td align="left">Tram, Streetcar, Light rail</td>
+<td align="left">21</td>
+<td align="left">8354.40589544412</td>
+<td align="left">397.828852164006</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</body>
+</html>
