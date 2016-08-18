@@ -6,6 +6,7 @@
 	-  spatialize inside it the `stop` and the `route` tables;
 	-  create some report tables about the GTFS data
 -  export the `stop` and the `route` tables in `GeoJSON` format;
+-  create a small report about the downloaded GTFS in HTML and Markdown format (it's still minimal and *under construction*) 
 -  ... more to come.
 
 ## Requirements
