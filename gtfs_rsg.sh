@@ -275,7 +275,9 @@ IFS=$OLDIFS
 
 export GHCRTS=-V0
 
-pandoc -f markdown_github --smart -s --toc "$workingFolder/$output/report/report.md" > "$workingFolder/$output/report/report.html"
+cp "$workingFolder/resources/report/github-pandoc.css" "$workingFolder/$output/report/style.css"
+pandoc --smart -s --toc --self-contained --css "$workingFolder/$output/report/style.css" "$workingFolder/$output/report/report.md" > "$workingFolder/$output/report/report.html"
+rm "$workingFolder/$output/report/style.css"
 
 
 ### end of the reporting part ###

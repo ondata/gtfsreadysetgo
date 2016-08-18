@@ -1,3 +1,12 @@
+## Transit system length in km
+
+route_type_name            |route_type_desc                                                 |routesNumber|lenghtKm
+:--------------------------|:---------------------------------------------------------------|:-----------|:---------------
+Tram, Streetcar, Light rail|Any light rail or street level system within a metropolitan area|4           |39.1856860499399
+Bus                        |Used for short- and long-distance bus routes                    |66          |1047.55967044287
+
+----------
+
 ## Number of routes by types
 
 route_type_name            |route_type_desc                                                 |routesNumber
@@ -7,12 +16,12 @@ Bus                        |Used for short- and long-distance bus routes        
 
 ----------
 
-## Transit system length in km
+## Number of stops by type
 
-route_type_name            |route_type_desc                                                 |routesNumber|lenghtKm
-:--------------------------|:---------------------------------------------------------------|:-----------|:---------------
-Tram, Streetcar, Light rail|Any light rail or street level system within a metropolitan area|4           |39.1856860499399
-Bus                        |Used for short- and long-distance bus routes                    |66          |1047.55967044287
+type                       |stopsNumber
+:--------------------------|:----------
+Bus                        |3724
+Tram, Streetcar, Light rail|97
 
 ----------
 
@@ -90,15 +99,6 @@ TRAM1           |Tram, Streetcar, Light rail|29
 TRAM2           |Tram, Streetcar, Light rail|25
 TRAM3           |Tram, Streetcar, Light rail|22
 TRAM4           |Tram, Streetcar, Light rail|21
-
-----------
-
-## Number of stops by type
-
-type                       |stopsNumber
-:--------------------------|:----------
-Bus                        |3724
-Tram, Streetcar, Light rail|97
 
 ----------
 
