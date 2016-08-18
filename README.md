@@ -14,7 +14,7 @@
 - spatialite | https://www.gaia-gis.it/fossil/spatialite-tools/index
 - unzip
 - curl
-- csvtk https://github.com/shenwei356/csvtk
+- csvtk | https://github.com/shenwei356/csvtk
 - pandoc | http://pandoc.org/
 
 ## Repo folders
