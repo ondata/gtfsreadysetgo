@@ -230,7 +230,7 @@ cat <<EOF > "$rReport"
 .table
 EOF
 
-rReportMeta="${PWD}/$output/rReportMeta.csv"
+rReportMeta="${PWD}/temp/rReportMeta.csv"
 
 cat <<EOF > "$rReportMeta"
 table_name,title,used_tables,description
@@ -260,9 +260,8 @@ do
     csvtk csv2md "${PWD}/$output/report/$filename.csv" > "${PWD}/$output/report/$filename.md"
 done
 
-sed -i -e "1d" "${PWD}/$output/rReportMeta.csv"
-#rm "${PWD}/$output/report/report.md"
-INPUT="${PWD}/$output/rReportMeta.csv"
+sed -i -e "1d" "${PWD}/temp/rReportMeta.csv"
+INPUT="${PWD}/temp/rReportMeta.csv"
 OLDIFS=$IFS
 IFS=,
 [ ! -f $INPUT ] && { echo "$INPUT file not found"; exit 99; }
@@ -277,6 +276,7 @@ IFS=$OLDIFS
 export GHCRTS=-V0
 
 pandoc -f markdown_github --smart -s --toc "${PWD}/$output/report/report.md" > "${PWD}/$output/report/report.html"
+
 
 ### end of the reporting part ###
 
