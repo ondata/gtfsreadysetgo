@@ -113,7 +113,7 @@ DROP TABLE routes_tmp;
 EOF
 
 # execute query using the created qrotte.sql file
-spatialite "${PWD}""/$output/$fileName.sqlite" < "$Qrotte"  > /dev/null 2>&1
+spatialite "$workingFolder""/$output/$fileName.sqlite" < "$Qrotte"  > /dev/null 2>&1
 
 # export routes GeoJSON file
 echo "Exporting GTFS and kml stops and routes file"
