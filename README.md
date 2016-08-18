@@ -10,10 +10,12 @@
 
 ## Requirements
 
-- gdal/ogr >= 2.1;
-- spatialite;
-- unzip;
-- curl.
+- GDAL - Geospatial Data Abstraction Library >= 2.1 | http://www.gdal.org/
+- spatialite | https://www.gaia-gis.it/fossil/spatialite-tools/index
+- unzip
+- curl
+- csvtk https://github.com/shenwei356/csvtk
+- pandoc | http://pandoc.org/
 
 ## Repo folders
 
