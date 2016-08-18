@@ -78,7 +78,7 @@ rm "$workingFolder/$fileName/routes.csv"
 
 # create a file .sql useful to create the spatial routes table
 echo "Making spatial the routes spatialite table"
-Qrotte=${PWD}/temp/qrotte.sql
+Qrotte="$workingFolder/temp/qrotte.sql"
 
 cat <<EOF > "$Qrotte"
 CREATE TABLE routes AS
@@ -117,15 +117,15 @@ spatialite "${PWD}""/$output/$fileName.sqlite" < "$Qrotte"  > /dev/null 2>&1
 
 # export routes GeoJSON file
 echo "Exporting GTFS and kml stops and routes file"
-rm "${PWD}""/$output/routes.geojson" > /dev/null 2>&1
-ogr2ogr -f geojson "${PWD}""/$output/routes.geojson" "${PWD}""/$output/$fileName.sqlite" routes
+rm "$workingFolder""/$output/routes.geojson" > /dev/null 2>&1
+ogr2ogr -f geojson "$workingFolder""/$output/routes.geojson" "$workingFolder""/$output/$fileName.sqlite" routes
 
 # export routes and stops in KML file format
-ogr2ogr -f KML -dsco NameField=route_short_name -dsco DescriptionField=route_long_name "${PWD}""/$output/routes.kml" "${PWD}""/$output/$fileName.sqlite" routes
-ogr2ogr -f KML -dsco NameField=stop_code -dsco DescriptionField=stop_name "${PWD}""/$output/stops.kml" "${PWD}""/$output/$fileName.sqlite" stops
+ogr2ogr -f KML -dsco NameField=route_short_name -dsco DescriptionField=route_long_name "$workingFolder""/$output/routes.kml" "$workingFolder""/$output/$fileName.sqlite" routes
+ogr2ogr -f KML -dsco NameField=stop_code -dsco DescriptionField=stop_name "$workingFolder""/$output/stops.kml" "$workingFolder""/$output/$fileName.sqlite" stops
 
 # create route_type table and import it in the spatialite file
-rType=${PWD}/temp/rType.csv
+rType="$workingFolder/temp/rType.csv"
 
 cat <<EOF > "$rType"
 route_type,route_type_name,route_type_desc
@@ -145,7 +145,7 @@ ogr2ogr -update -f SQLite -nln "route_type" -oo AUTODETECT_TYPE=YES "$workingFol
 # create a sql file useful to create some GTFS report tables
 echo "Creating spatialite report tables"
 
-rSQL=${PWD}/temp/rSQL.sql
+rSQL="$workingFolder/temp/rSQL.sql"
 
 cat <<EOF > "$rSQL"
 /* Number_of_modes_and_types */
@@ -218,19 +218,19 @@ LEFT JOIN routes r using(route_id);
 EOF
 
 # execute the rSQL.sql query
-spatialite "${PWD}""/$output/$fileName.sqlite" < "$rSQL"  > /dev/null 2>&1
+spatialite "$workingFolder""/$output/$fileName.sqlite" < "$rSQL"  > /dev/null 2>&1
 
 
 ### start of the reporting part ###
 
-rReport="${PWD}/temp/rReport.sql"
+rReport="$workingFolder/temp/rReport.sql"
 
 cat <<EOF > "$rReport"
 .output stdout
 .table
 EOF
 
-rReportMeta="${PWD}/temp/rReportMeta.csv"
+rReportMeta="$workingFolder/temp/rReportMeta.csv"
 
 cat <<EOF > "$rReportMeta"
 table_name,title,used_tables,description
@@ -243,39 +243,39 @@ EOF
 
 echo "Exporting CSV and markdown report files"
 # execute query using the created rReport.sql file
-list=$(spatialite "${PWD}""/$output/$fileName.sqlite" < "$rReport" | grep -oP '\bz_.*?\b' | sed ':a;N;$!ba;s/\n/ /g')
+list=$(spatialite "$workingFolder""/$output/$fileName.sqlite" < "$rReport" | grep -oP '\bz_.*?\b' | sed ':a;N;$!ba;s/\n/ /g')
 
-mkdir "${PWD}/$output/report"
+mkdir "$workingFolder/$output/report"
 for VARIABLE in $list
 do
-    ogr2ogr -f CSV "${PWD}/$output/report/""$VARIABLE.csv" "${PWD}""/$output/$fileName.sqlite" "$VARIABLE"
+    ogr2ogr -f CSV "$workingFolder/$output/report/""$VARIABLE.csv" "$workingFolder""/$output/$fileName.sqlite" "$VARIABLE"
 done
 
 # create the markdown files for csv report tables
-for file in "${PWD}/$output/report/"*.csv
+for file in "$workingFolder/$output/report/"*.csv
 do
     filename=$(basename "$file")
     extension="${filename##*.}"
     filename="${filename%.*}"
-    csvtk csv2md "${PWD}/$output/report/$filename.csv" > "${PWD}/$output/report/$filename.md"
+    csvtk csv2md "$workingFolder/$output/report/$filename.csv" > "$workingFolder/$output/report/$filename.md"
 done
 
-sed -i -e "1d" "${PWD}/temp/rReportMeta.csv"
-INPUT="${PWD}/temp/rReportMeta.csv"
+sed -i -e "1d" "$workingFolder/temp/rReportMeta.csv"
+INPUT="$workingFolder/temp/rReportMeta.csv"
 OLDIFS=$IFS
 IFS=,
 [ ! -f $INPUT ] && { echo "$INPUT file not found"; exit 99; }
 while read table_name title used_tables description
 do
-    echo -e "## $title\n" >> "${PWD}/$output/report/report.md"
-    cat "${PWD}/$output/report/$table_name.md" >> "${PWD}/$output/report/report.md"
-    echo -e "\n----------\n" >> "${PWD}/$output/report/report.md"
+    echo -e "## $title\n" >> "$workingFolder/$output/report/report.md"
+    cat "$workingFolder/$output/report/$table_name.md" >> "$workingFolder/$output/report/report.md"
+    echo -e "\n----------\n" >> "$workingFolder/$output/report/report.md"
 done < $INPUT
 IFS=$OLDIFS
 
 export GHCRTS=-V0
 
-pandoc -f markdown_github --smart -s --toc "${PWD}/$output/report/report.md" > "${PWD}/$output/report/report.html"
+pandoc -f markdown_github --smart -s --toc "$workingFolder/$output/report/report.md" > "$workingFolder/$output/report/report.html"
 
 
 ### end of the reporting part ###
