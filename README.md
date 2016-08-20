@@ -5,7 +5,7 @@
 -  convert it to a spatialite file;
 	-  spatialize inside it the `stops` and the `routes` tables;
 	-  create some report tables about the GTFS data
--  export the `stops` and the `routes` tables in `GeoJSON` format;
+-  export the `stops` and the `routes` tables in `GeoJSON` and `KML` formats;
 -  create a small report about the downloaded GTFS in HTML and Markdown format (it's still minimal and *under construction*) 
 -  ... more to come.
 
