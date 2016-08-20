@@ -3,9 +3,9 @@
 **GTFS ready, set, go ...** is a bash script that download a GTFS file, and than:
 
 -  convert it to a spatialite file;
-	-  spatialize inside it the `stop` and the `route` tables;
+	-  spatialize inside it the `stops` and the `routes` tables;
 	-  create some report tables about the GTFS data
--  export the `stop` and the `route` tables in `GeoJSON` format;
+-  export the `stops` and the `routes` tables in `GeoJSON` format;
 -  create a small report about the downloaded GTFS in HTML and Markdown format (it's still minimal and *under construction*) 
 -  ... more to come.
 
